@@ -88,7 +88,7 @@ impl<T> VecHistoric<T> {
 
                 let mut res: Vec<T> = Vec::with_capacity(data.amount);
 
-                for i in 0..data.amount {
+                for _ in 0..data.amount {
                     res.push(self.data.remove(data.index));
                 }
                 return res;
@@ -113,7 +113,7 @@ impl<T> VecHistoric<T> {
 
                 let mut elements: VecDeque<T> = VecDeque::with_capacity(data.indecies.len());
 
-                for i in 0..data.indecies.len() {
+                for _ in 0..data.indecies.len() {
                     let elem = self.data.remove(data.dest_index);
                     elements.push_back(elem);
                 }

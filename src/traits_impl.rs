@@ -1,7 +1,6 @@
 use std::collections::VecDeque;
 use std::hash::{Hash, Hasher};
-use std::borrow::{Borrow, BorrowMut};
-use std::ops::{Deref, DerefMut, Index, IndexMut};
+use std::ops::{Index, IndexMut};
 
 use gapbuf::GapBuffer;
 use indexmap::IndexSet;

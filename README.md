@@ -19,11 +19,10 @@ It's especially useful for implementing editor-like data structures, timelines, 
 
 ```rust
 use vec_historic::VecHistoric;
-
-use crate::vec_historic;
+use vec_historic::vec_historic;
 
 fn main() {
-    let mut b: Vec<i32> = vec_historic![1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let mut b: VecHistoric<i32> = vec_historic![1, 2, 3, 4, 5, 6, 7, 8, 9];
     b.insert_many_historic(5, [1996, 2004]); // 1, 2, 3, 4, 5, 1996, 2004, 6, 7, 8, 9
     b.undo(); // 1, 2, 3, 4, 5, 6, 7, 8, 9
 
@@ -38,8 +37,7 @@ fn main() {
 
 ```rust
 use vec_historic::VecHistoric;
-
-use crate::vec_historic;
+use vec_historic::vec_historic;
 
 fn main() {
     let mut b: VecHistoric<i32> = vec_historic![1, 2, 3, 4, 5, 6, 7, 8, 9];
