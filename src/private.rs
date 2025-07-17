@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-use crate::vec_historic::VecHistoric;
+use crate::{RemoveData, vec_historic::VecHistoric};
 
 use super::defines::Action;
 
@@ -15,7 +15,7 @@ pub fn take_values_from_action<T>(action: Action<T>) -> Vec<T> {
         }
         Action::Insert(_) => {}
         Action::Remove(data) => {
-            return data.into_iter().map(|v| v.1).collect();
+            return data.values;
         }
         Action::PushBack => {}
         Action::PushFront => {}
@@ -35,12 +35,10 @@ impl<T> VecHistoric<T> {
                 Action::PopBack(_) => {
                     len += 1;
                 }
-                Action::PopFront(_) => {
-                    len += 1
-                }
+                Action::PopFront(_) => len += 1,
                 Action::Insert(_) => {}
                 Action::Remove(data) => {
-                    len += data.len();
+                    len += data.values.len();
                 }
                 Action::PushBack => {}
                 Action::PushFront => {}
@@ -98,8 +96,15 @@ impl<T> VecHistoric<T> {
             Action::Remove(data) => {
                 self.selects.clear();
 
-                for (index, element) in data.into_iter().rev() {
-                    self.data.insert(index, element);
+                // for (index, element) in data.into_iter().rev() {
+                //     self.data.insert(index, element);
+                //     self.selects.insert(index);
+                // }
+
+                let RemoveData { indecies, values } = data;
+
+                for (index, value) in indecies.into_iter().zip(values).rev() {
+                    self.data.insert(index, value);
                     self.selects.insert(index);
                 }
             }

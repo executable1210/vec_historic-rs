@@ -199,13 +199,13 @@ impl<T> VecHistoric<T> {
         return selected;
     }
 
-    /// Selects an element
+    /// Selects an element by index
     #[inline(always)]
     pub fn select(&mut self, index: usize) {
         self.selects.insert(index);
     }
 
-    /// Deselects an element
+    /// Deselects an element by index
     #[inline(always)]
     pub fn deselect(&mut self, index: usize) -> bool {
         self.selects.shift_remove(&index)
@@ -221,6 +221,14 @@ impl<T> VecHistoric<T> {
     #[inline(always)]
     pub fn deselect_all(&mut self) {
         self.selects.clear();
+    }
+
+    /// Selects all elements
+    #[inline(always)]
+    pub fn select_all(&mut self) {
+        for i in 0..self.data.len() {
+            self.selects.insert(i);
+        }
     }
 
     /// Removes the last element from a VecHistoric and returns its address, or [`None`] if it
@@ -348,18 +356,22 @@ impl<T> VecHistoric<T> {
         return elems;
     }
 
-    /// Removes selected elements and returns address of the action
+    /// Removes selected elements and returns address of the removed elements
     /// Creates an action in history sequence
-    pub fn remove_selects_historic(&mut self) -> &Vec<(usize, T)> {
+    pub fn remove_selects_historic(&mut self) -> &Vec<T> {
         let selects = self.get_selects_sorted();
 
-        let mut remove_data: RemoveData<T> = Vec::with_capacity(self.data.len());
+        // let mut remove_data: RemoveData<T> = Vec::with_capacity(self.data.len());
+
+        let mut remove_data = RemoveData::new(self.data.len());
 
         for sel in selects.iter().rev() {
             let sel = sel.clone();
             let elem = self.data.remove(sel);
 
-            remove_data.push((sel, elem));
+            // remove_data.push((sel, elem));
+            remove_data.indecies.push(sel);
+            remove_data.values.push(elem);
         }
 
         self.history.push_back(Action::Remove(remove_data));
@@ -371,7 +383,7 @@ impl<T> VecHistoric<T> {
             unreachable!()
         };
 
-        return remove_data;
+        return &remove_data.values;
     }
 
     /// Moves selected elements to a specific position `index`

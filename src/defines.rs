@@ -13,7 +13,13 @@ pub struct IntoIter<T> {
 pub type Iter<'a, T> = std::iter::Chain<std::slice::Iter<'a, T>, std::slice::Iter<'a, T>>;
 pub type IterMut<'a, T> = std::iter::Chain<std::slice::IterMut<'a, T>, std::slice::IterMut<'a, T>>;
 
-pub type RemoveData<T> = (Vec<(usize, T)>); // index, element
+// pub type RemoveData<T> = (Vec<(usize, T)>); // index, element
+
+#[derive(Clone, Debug)]
+pub struct RemoveData<T> {
+    pub indecies: Vec<usize>,
+    pub values: Vec<T>
+}
 
 #[derive(Clone, Debug)]
 pub struct MoveData {

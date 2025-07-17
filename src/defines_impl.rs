@@ -1,7 +1,18 @@
 use std::iter::FusedIterator;
 
-use super::defines::{IntoIter};
+use crate::RemoveData;
+
+use super::defines::IntoIter;
 use super::vec_historic::VecHistoric;
+
+impl<T> RemoveData<T> {
+    pub fn new(len: usize) -> Self {
+        Self {
+            indecies: Vec::with_capacity(len),
+            values: Vec::with_capacity(len),
+        }
+    }
+}
 
 impl<T> IntoIter<T> {
     pub fn new(inner: VecHistoric<T>) -> Self {
