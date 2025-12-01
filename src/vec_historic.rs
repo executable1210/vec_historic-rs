@@ -5,7 +5,7 @@ use indexmap::IndexSet;
 
 use super::defines::Action;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct VecHistoric<T> {
     pub(super) data: GapBuffer<T>,
     pub(super) selects: IndexSet<usize>,
