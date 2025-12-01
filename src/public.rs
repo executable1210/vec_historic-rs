@@ -1,6 +1,6 @@
 use std::ops::RangeBounds;
 
-use gapbuf::Drain;
+use gapbuf::{Drain, GapBuffer};
 
 use super::defines::{Action, InsertData, MoveData, RemoveData};
 use super::private::*;
@@ -138,6 +138,18 @@ impl<T> VecHistoric<T> {
         self.clear_history();
         self.deselect_all();
         self.data.drain(range)
+    }
+
+    /// Returns inner gap_buffer.
+    #[inline(always)]
+    pub fn get_inner_data(&self) -> &GapBuffer<T> {
+        return &self.data;
+    }
+
+    /// Returns inner gap_buffer.
+    #[inline(always)]
+    pub fn get_inner_data_mut(&mut self) -> &mut GapBuffer<T> {
+        return &mut self.data;
     }
 }
 
