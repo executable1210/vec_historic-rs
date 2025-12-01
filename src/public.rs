@@ -179,6 +179,12 @@ impl<T> VecHistoric<T> {
         return values;
     }
 
+    /// Clears selects
+    #[inline(always)]
+    pub fn clear_selects(&mut self) {
+        self.selects.clear();
+    }
+
     /// Returns the count of selected elements
     #[inline(always)]
     pub fn len_selects(&self) -> usize {
